@@ -1,0 +1,54 @@
+version: 2
+
+project_name: uconsole-installer
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: linux-arm64
+    main: .
+    binary: uconsole-installer
+    env:
+      - CGO_ENABLED=1
+    goos:
+      - linux
+    goarch:
+      - arm64
+    flags:
+      - -trimpath
+      - -ldflags=-s -w
+    tags:
+      - gtk_3_24
+
+archives:
+  - id: default
+    formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - README.md
+      - LICENSE
+      - install.sh
+    info:
+      owner: 4rgs-org
+      description: Native GTK3 fuzzy search over the 13 000+ Arch Linux ARM packages
+
+checksum:
+  name_template: 'SHA256SUMS'
+  algorithm: sha256
+
+release:
+  github:
+    owner: 4rgs-org
+    name: uconsole-installer
+  draft: false
+  prerelease: auto
+  header: |
+    ## uconsole-installer {{ .Tag }}
+  footer: |
+    ## Install
+
+    ```sh
+    curl -sSL https://raw.githubusercontent.com/4rgs-org/uconsole-installer/main/install.sh | sh
+    ```
