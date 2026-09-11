@@ -30,9 +30,6 @@ archives:
       - README.md
       - LICENSE
       - install.sh
-    info:
-      owner: 4rgs-org
-      description: Native GTK3 fuzzy search over the 13 000+ Arch Linux ARM packages
 
 checksum:
   name_template: 'SHA256SUMS'
